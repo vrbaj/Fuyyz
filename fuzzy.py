@@ -44,7 +44,7 @@ def get_triangular_mf_degree(point, params):
 
 x = 1.75
 # test_fuzzy_set_params = np.array([0, 1, 2])
-test_fuzzy_set_params = np.array([1,1])
+test_fuzzy_set_params = np.array([1, 1])
 
 test_fuzzy_set_type = "TRIANGULAR"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
