@@ -68,7 +68,7 @@ def get_gaussian_mf_degree(point,params):
         membership_degree = math.exp((-0.5*(point - center)**2)/(sigma**2))
     return membership_degree
 
-x = 1.75
+x = -1.75
 # test_fuzzy_set_params = np.array([0, 1, 2])
 test_fuzzy_set_params = np.array([1, 0.6])
 
