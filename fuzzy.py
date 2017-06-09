@@ -70,7 +70,7 @@ def get_gaussian_mf_degree(point,params):
 
 x = 1.75
 # test_fuzzy_set_params = np.array([0, 1, 2])
-test_fuzzy_set_params = np.array([1, 0.5])
+test_fuzzy_set_params = np.array([1, 0.6])
 
 #test_fuzzy_set_type = "TRIANGULAR"
 test_fuzzy_set_type = "GAUSSIAN"
