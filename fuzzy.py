@@ -1,10 +1,13 @@
 import numpy as np
+import math
 
 
 def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
     membership_degree = 0
     if fuzzy_set_type == "TRIANGULAR":
         membership_degree = get_triangular_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "GAUSSIAN":
+        membership_degree = get_gaussian_mf_degree(point,fuzzy_set_params)
     return membership_degree
 
 
@@ -19,7 +22,7 @@ def get_triangular_mf_degree(point, params):
                  in symmetrical case [distance_from_center_to_bounds, center]
 
     Returns:
-        float -- value of membership to triangular function
+        float -- value of membership degree to triangular function
 
     """
     membership_degree = 0
@@ -42,10 +45,34 @@ def get_triangular_mf_degree(point, params):
 
     return membership_degree
 
+def get_gaussian_mf_degree(point,params):
+    """
+    This function return the membership degree of point to fuzzy set specified by gaussian  member ship function.
+     Gaussian membership function is specified by parameters in params. Gaussian function is implemented as
+     math.exp((-0.5*(point - center)**2)/(sigma**2))
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of gaussian membership function [center, sigma]
+
+    Returns:
+        float -- value of membership degree to gaussian function
+
+    """
+    membership_degree = 0
+    if params.size <= 1 or params.size > 2:
+        print('get_triangular_mf_value: invalid number of parameters')
+    else:
+        center = params[0]
+        sigma = params[1]
+        membership_degree = math.exp((-0.5*(point - center)**2)/(sigma**2))
+    return membership_degree
+
 x = 1.75
 # test_fuzzy_set_params = np.array([0, 1, 2])
-test_fuzzy_set_params = np.array([1, 1])
+test_fuzzy_set_params = np.array([1, 0.5])
 
-test_fuzzy_set_type = "TRIANGULAR"
+#test_fuzzy_set_type = "TRIANGULAR"
+test_fuzzy_set_type = "GAUSSIAN"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
