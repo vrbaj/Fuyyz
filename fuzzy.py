@@ -35,17 +35,17 @@ def get_triangular_mf_degree(point, params):
             upper_limit = params[2]
         if lower_limit < point <= center:
             membership_degree = (point - lower_limit)/(center - lower_limit)
-            print('jsem tu')
         elif center < point < upper_limit:
             membership_degree = (upper_limit - point)/(upper_limit - center)
-            print('jsem tu podruhe')
         else:
             membership_degree = 0
 
     return membership_degree
 
-x = -1
-fuzzy_set_params = np.array([0, 1, 2])
-fuzzy_set_type = "TRIANGULAR"
-mf = get_membership_degree(x, fuzzy_set_type, fuzzy_set_params)
+x = 1.75
+# test_fuzzy_set_params = np.array([0, 1, 2])
+test_fuzzy_set_params = np.array([1,1])
+
+test_fuzzy_set_type = "TRIANGULAR"
+mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
