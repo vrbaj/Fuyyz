@@ -61,7 +61,7 @@ def get_gaussian_mf_degree(point,params):
     """
     membership_degree = 0
     if params.size <= 1 or params.size > 2:
-        print('get_triangular_mf_value: invalid number of parameters')
+        print('get_gaussian_mf_value: invalid number of parameters')
     else:
         center = params[0]
         sigma = params[1]
