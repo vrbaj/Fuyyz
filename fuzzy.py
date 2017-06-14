@@ -1,5 +1,4 @@
 import numpy as np
-import math
 
 
 def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
@@ -7,7 +6,9 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
     if fuzzy_set_type == "TRIANGULAR":
         membership_degree = get_triangular_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "GAUSSIAN":
-        membership_degree = get_gaussian_mf_degree(point,fuzzy_set_params)
+        membership_degree = get_gaussian_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "TRAPEZOIDAL":
+        membership_degree = get_trapezoidal_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -45,7 +46,8 @@ def get_triangular_mf_degree(point, params):
 
     return membership_degree
 
-def get_gaussian_mf_degree(point,params):
+
+def get_gaussian_mf_degree(point, params):
     """
     This function return the membership degree of point to fuzzy set specified by gaussian  member ship function.
      Gaussian membership function is specified by parameters in params. Gaussian function is implemented as
@@ -65,14 +67,45 @@ def get_gaussian_mf_degree(point,params):
     else:
         center = params[0]
         sigma = params[1]
-        membership_degree = math.exp((-0.5*(point - center)**2)/(sigma**2))
+        membership_degree = np.exp((-0.5*(point - center)**2)/(sigma**2))
     return membership_degree
 
-x = -1.75
-# test_fuzzy_set_params = np.array([0, 1, 2])
-test_fuzzy_set_params = np.array([1, 0.6])
 
-#test_fuzzy_set_type = "TRIANGULAR"
-test_fuzzy_set_type = "GAUSSIAN"
+def get_trapezoidal_mf_degree(point, params):
+    """
+    This function return the membership degree of point to fuzzy set specified by trapezoidal  member ship function.
+     Trapezoidal membership function is specified by parameters in params.
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of trapezoidal membership function [a, b, c, d]
+
+    Returns:
+        float -- value of membership degree to gaussian function
+
+    """
+    a = params[0]
+    b = params[1]
+    c = params[2]
+    d = params[3]
+    membership_degree = 0
+    if point < a or point > d:
+        membership_degree = 0
+    elif a <= point <= b:
+        membership_degree = (x - a) / (b - a)
+    elif b <= point <= c:
+        membership_degree = 1
+    elif c <= point <= d:
+        membership_degree = (d - point) / (d - c)
+    return membership_degree
+
+
+x = 2.3
+# test_fuzzy_set_params = np.array([0, 1, 2])
+# test_fuzzy_set_params = np.array([1, 0.6])
+test_fuzzy_set_params = np.array([-1, 0, 1, 2])
+# test_fuzzy_set_type = "TRIANGULAR"
+# test_fuzzy_set_type = "GAUSSIAN"
+test_fuzzy_set_type = "TRAPEZOIDAL"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
