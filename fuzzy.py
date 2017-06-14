@@ -15,6 +15,8 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_r_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "L":
         membership_degree = get_l_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "BELL":
+        membership_degree = get_bell_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -82,7 +84,7 @@ def get_gaussian2_mf_degree(point, params):
     This function returns the membership degree of point to fuzzy set specified by 2 gaussian  member ship function.
      Gaussian membership functions are specified by parameters in params. The value of membership degree between two
      centers of gaussian functions is always 1. Gaussian function is implemented as
-     math.exp((-0.5*(point - center)**2)/(sigma**2))
+     np.exp((-0.5*(point - center)**2)/(sigma**2))
 
     Args:
         point (number):  point in which we want to estimate membership degree
@@ -94,7 +96,7 @@ def get_gaussian2_mf_degree(point, params):
     """
     membership_degree = 0
     if params.size <= 3 or params.size > 4:
-        print('get_gaussian_mf_value: invalid number of parameters')
+        print('get_gaussian2_mf_value: invalid number of parameters')
     else:
         center1 = params[0]
         sigma1 = params[1]
@@ -123,7 +125,7 @@ def get_trapezoidal_mf_degree(point, params):
 
     """
     membership_degree = 0
-    if params.size <=3 or params.size > 4:
+    if params.size <= 3 or params.size > 4:
         print("get_trapezoidal_mf_degree: invalid number of parameters")
     else:
         a = params[0]
@@ -198,17 +200,41 @@ def get_l_mf_degree(point, params):
     return membership_degree
 
 
-x = 6
-# test_fuzzy_set_params = np.array([0, 1, 2])
-# test_fuzzy_set_params = np.array([1, 0.6])
-# test_fuzzy_set_params = np.array([-1, 0, 1, 2])
-# test_fuzzy_set_params = np.array([1, 2])
-test_fuzzy_set_params = np.array([1, 0.5, 2, 3])
+def get_bell_mf_degree(point, params):
+    """
+    This function returns the membership degree of point to fuzzy set specified by bell-shaped  member ship function.
+     Bell-shaped membership function is specified by parameters in params. Bell-shaped function is implemented as
+     1/(1+abs((x-c)/a)**2b
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of bell-shaped membership function [a, b,c]
+
+    Returns:
+        float -- value of membership degree to L function
+
+    """
+    membership_degree = 0
+    if params.size <= 2 or params.size > 3:
+        print("get_bell_mf_degree: invalid number of parameters")
+    else:
+
+        a = params[0]
+        b = params[1]
+        c = params[2]
+        membership_degree = 1/(1+(abs((point - c) / a)**(2*b)))
+    return membership_degree
+
+
+x = 10
+
+test_fuzzy_set_params = np.array([2, 4, 6])
 # test_fuzzy_set_type = "TRIANGULAR"
 # test_fuzzy_set_type = "GAUSSIAN"
 # test_fuzzy_set_type = "TRAPEZOIDAL"
 # test_fuzzy_set_type = "R"
 # test_fuzzy_set_type = "L"
-test_fuzzy_set_type = "GAUSSIAN2"
+# test_fuzzy_set_type = "GAUSSIAN2"
+test_fuzzy_set_type = "BELL"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
