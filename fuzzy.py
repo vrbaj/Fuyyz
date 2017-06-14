@@ -17,6 +17,8 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_l_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "BELL":
         membership_degree = get_bell_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "SIGMOID":
+        membership_degree = get_sigmoid_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -204,11 +206,11 @@ def get_bell_mf_degree(point, params):
     """
     This function returns the membership degree of point to fuzzy set specified by bell-shaped  member ship function.
      Bell-shaped membership function is specified by parameters in params. Bell-shaped function is implemented as
-     1/(1+abs((x-c)/a)**2b
+     1/(1+abs((point-center)/a)**2b
 
     Args:
         point (number):  point in which we want to estimate membership degree
-        params (numpy array):  specification of bell-shaped membership function [a, b,c]
+        params (numpy array):  specification of bell-shaped membership function [a, b, center]
 
     Returns:
         float -- value of membership degree to L function
@@ -226,15 +228,38 @@ def get_bell_mf_degree(point, params):
     return membership_degree
 
 
-x = 10
+def get_sigmoid_mf_degree(point, params):
+    """
+    This function returns the membership degree of point to fuzzy set specified by sigmoidal  member ship function.
+     Sigmoidal membership function is specified by parameters in params. This function is implemented as
+     1/(1+exp(-a*(point-center)).
 
-test_fuzzy_set_params = np.array([2, 4, 6])
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of bell-shaped membership function [center, a]
+
+    Returns:
+        float -- value of membership degree to L function
+
+    """
+    membership_degree = 0
+    if params.size <= 1 or params.size > 2:
+        print("get_sigmoid_mf_degree: invalid number of parameters")
+    else:
+
+        center = params[0]
+        a = params[1]
+        membership_degree = 1/(1+np.exp(-a*(point - center)))
+    return membership_degree
+x = 2.01
+
+test_fuzzy_set_params = np.array([2, 4])
 # test_fuzzy_set_type = "TRIANGULAR"
 # test_fuzzy_set_type = "GAUSSIAN"
 # test_fuzzy_set_type = "TRAPEZOIDAL"
 # test_fuzzy_set_type = "R"
 # test_fuzzy_set_type = "L"
 # test_fuzzy_set_type = "GAUSSIAN2"
-test_fuzzy_set_type = "BELL"
+test_fuzzy_set_type = "SIGMOID"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
