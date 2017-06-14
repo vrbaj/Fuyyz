@@ -9,6 +9,10 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_gaussian_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "TRAPEZOIDAL":
         membership_degree = get_trapezoidal_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "R":
+        membership_degree = get_r_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "L":
+        membership_degree = get_l_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -81,7 +85,7 @@ def get_trapezoidal_mf_degree(point, params):
         params (numpy array):  specification of trapezoidal membership function [a, b, c, d]
 
     Returns:
-        float -- value of membership degree to gaussian function
+        float -- value of membership degree to trapezoidal function
 
     """
     a = params[0]
@@ -100,12 +104,65 @@ def get_trapezoidal_mf_degree(point, params):
     return membership_degree
 
 
-x = 2.3
+def get_r_mf_degree(point, params):
+    """
+    This function return the membership degree of point to fuzzy set specified by R  member ship function.
+     R membership function is specified by parameters in params.
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of R membership function [c, d]
+
+    Returns:
+        float -- value of membership degree to R function
+
+    """
+    membership_degree = 0
+    c = params[0]
+    d = params[1]
+    if point > d:
+        membership_degree = 0
+    elif c <= point <= d:
+        membership_degree = (d - point) / (d - c)
+    elif point < c:
+        membership_degree = 1
+    return membership_degree
+
+
+def get_l_mf_degree(point, params):
+    """
+    This function return the membership degree of point to fuzzy set specified by R  member ship function.
+     R membership function is specified by parameters in params.
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of R membership function [c, d]
+
+    Returns:
+        float -- value of membership degree to R function
+
+    """
+    membership_degree = 0
+    a = params[0]
+    b = params[1]
+    if point > b:
+        membership_degree = 1
+    elif a <= point <= b:
+        membership_degree = (point - a) / (b - a)
+    elif point < a:
+        membership_degree = 0
+    return membership_degree
+
+
+x = 2.001
 # test_fuzzy_set_params = np.array([0, 1, 2])
 # test_fuzzy_set_params = np.array([1, 0.6])
-test_fuzzy_set_params = np.array([-1, 0, 1, 2])
+# test_fuzzy_set_params = np.array([-1, 0, 1, 2])
+test_fuzzy_set_params = np.array([1, 2])
 # test_fuzzy_set_type = "TRIANGULAR"
 # test_fuzzy_set_type = "GAUSSIAN"
-test_fuzzy_set_type = "TRAPEZOIDAL"
+# test_fuzzy_set_type = "TRAPEZOIDAL"
+# test_fuzzy_set_type = "R"
+test_fuzzy_set_type = "L"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
