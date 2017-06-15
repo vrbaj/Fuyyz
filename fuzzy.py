@@ -10,7 +10,7 @@ Contents of this page:
     :depth: 1
 
 
-Code explanation
+WTF
 ============================
 """
 
