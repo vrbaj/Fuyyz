@@ -25,6 +25,8 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_prodsigmoid_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "ZSPLINE":
         membership_degree = get_zspline_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "SSPLINE":
+        membership_degree = get_sspline_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -319,7 +321,8 @@ def get_zspline_mf_degree(point, params):
     This function returns the membership degree of point to fuzzy set specified by Z spline based
     member ship function. Z spline membership function is specified by parameters in params.
     This function is implemented as 1-2*((point - a) \ (b - a)) ** 2 for a <= point <= (a + b) \ 2 and
-    2*((point - b) \ (b - a)) ** 2 for (a + b) / 2 <= point <= b. For x <= a is output 1, for x >= b is output 0.
+    2*((point - b) \ (b - a)) ** 2 for (a + b) / 2 <= point <= b. For point <= a is output 1,
+    for point >= b is output 0.
 
     Args:
         point (number):  point in which we want to estimate membership degree
@@ -345,8 +348,41 @@ def get_zspline_mf_degree(point, params):
             membership_degree = 0
     return membership_degree
 
-x = 6.9
 
+def get_sspline_mf_degree(point, params):
+    """
+    This function returns the membership degree of point to fuzzy set specified by S spline based
+    member ship function. S spline membership function is specified by parameters in params.
+    This function is implemented as 1-2*((point - a) \ (b - a)) ** 2 for (a + b) / 2 <= point <= b and
+    2*((point - b) \ (b - a)) ** 2 for a <= point <= (a + b) \ 2. For point <= a is output 0,
+    for point >= b is output 1.
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of sigmoid membership functions [a, b]
+
+    Returns:
+        float -- value of membership degree to product of Z-spline based function
+
+    """
+    membership_degree = 0
+    if params.size <= 1 or params.size > 2:
+        print("get_get_zspline_mf_degree: invalid number of parameters")
+    else:
+        a = params[0]
+        b = params[1]
+        if point >= b:
+            membership_degree = 1
+        elif a <= point <= (a + b) / 2:
+            membership_degree = 2 * ((x - a) / (b - a)) ** 2
+        elif (a + b) / 2 <= point <= b:
+            membership_degree = 1 - 2 * ((x - b) / (b - a)) ** 2
+        elif point >= a:
+            membership_degree = 0
+    return membership_degree
+
+
+x = 6.9
 test_fuzzy_set_params = np.array([3, 7])
 # test_fuzzy_set_type = "TRIANGULAR"
 # test_fuzzy_set_type = "GAUSSIAN"
@@ -357,6 +393,7 @@ test_fuzzy_set_params = np.array([3, 7])
 # test_fuzzy_set_type = "SIGMOID"
 # test_fuzzy_set_type = "DIFSIGMOID"
 # test_fuzzy_set_type = "PRODSIGMOID"
-test_fuzzy_set_type = "ZSPLINE"
+# test_fuzzy_set_type = "ZSPLINE"
+test_fuzzy_set_type = "SSPLINE"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
