@@ -1,3 +1,20 @@
+"""
+.. versionadded:: 0.1
+
+Module for estimation of membership degree to various types of fuzzy sets.
+
+Contents of this page:
+
+.. contents::
+    :local:
+    :depth: 1
+
+
+Code explanation
+============================
+"""
+
+
 import numpy as np
 
 
@@ -37,7 +54,7 @@ def get_triangular_mf_degree(point, params):
     This function returns the membership degree of point to fuzzy set specified by triangular  member ship function.
      Triangular membership function is specified by parameters in params
 
-    Args:
+    **Args:**
         point (number):  point in which we want to estimate membership degree
         params (numpy array):  specification of triangular membership function [lower_limit, center, upper_limit] or
                  in symmetrical case [distance_from_center_to_bounds, center]
