@@ -2,7 +2,7 @@ import numpy as np
 
 
 def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
-    membership_degree = 0
+    membership_degree = -1
     if fuzzy_set_type == "TRIANGULAR":
         membership_degree = get_triangular_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "GAUSSIAN":
@@ -27,6 +27,8 @@ def get_membership_degree(point, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_zspline_mf_degree(point, fuzzy_set_params)
     elif fuzzy_set_type == "SSPLINE":
         membership_degree = get_sspline_mf_degree(point, fuzzy_set_params)
+    elif fuzzy_set_type == "PSPLINE":
+        membership_degree = get_pspline_mf_degree(point, fuzzy_set_params)
     return membership_degree
 
 
@@ -341,9 +343,9 @@ def get_zspline_mf_degree(point, params):
         if point <= a:
             membership_degree = 1
         elif a <= point <= (a + b) / 2:
-            membership_degree = 1 - 2 * ((x - a) / (b - a)) ** 2
+            membership_degree = 1 - 2 * ((point - a) / (b - a)) ** 2
         elif (a + b) / 2 <= point <= b:
-            membership_degree = 2 * ((x - b) / (b - a)) ** 2
+            membership_degree = 2 * ((point - b) / (b - a)) ** 2
         elif b <= point:
             membership_degree = 0
     return membership_degree
@@ -362,7 +364,7 @@ def get_sspline_mf_degree(point, params):
         params (numpy array):  specification of sigmoid membership functions [a, b]
 
     Returns:
-        float -- value of membership degree to product of Z-spline based function
+        float -- value of membership degree to product of S-spline based function
 
     """
     membership_degree = 0
@@ -374,16 +376,53 @@ def get_sspline_mf_degree(point, params):
         if point >= b:
             membership_degree = 1
         elif a <= point <= (a + b) / 2:
-            membership_degree = 2 * ((x - a) / (b - a)) ** 2
+            membership_degree = 2 * ((point - a) / (b - a)) ** 2
         elif (a + b) / 2 <= point <= b:
-            membership_degree = 1 - 2 * ((x - b) / (b - a)) ** 2
+            membership_degree = 1 - 2 * ((point - b) / (b - a)) ** 2
         elif point >= a:
             membership_degree = 0
     return membership_degree
 
 
-x = 6.9
-test_fuzzy_set_params = np.array([3, 7])
+def get_pspline_mf_degree(point, params):
+    """
+    This function returns the membership degree of point to fuzzy set specified by S spline based
+    member ship function. S spline membership function is specified by parameters in params.
+    This function is implemented as combination of sspline a zspline functions.
+
+    Args:
+        point (number):  point in which we want to estimate membership degree
+        params (numpy array):  specification of pspline membership functions [a, b, c, d]
+
+    Returns:
+        float -- value of membership degree to product of Z-spline based function
+
+    """
+    membership_degree = 0
+    if params.size <= 3 or params.size > 4:
+        print("get_get_zspline_mf_degree: invalid number of parameters")
+    else:
+        a = params[0]
+        b = params[1]
+        c = params[2]
+        d = params[3]
+        if point <= a:
+            membership_degree = 0
+        elif a <= point <= (a + b) / 2:
+            membership_degree = 2 * ((point - a) / (b - a)) ** 2
+        elif b <= point <= c:
+            membership_degree = 1
+        elif c <= point <= (c + d) / 2:
+            membership_degree = 1 - 2 * ((point - c) / (d - c)) ** 2
+        elif (c + d) / 2 <= point <= d:
+            membership_degree = 2 * ((point - c) / (d - c)) ** 2
+        elif point >= d:
+            membership_degree = 0
+    return membership_degree
+
+
+x = 11
+test_fuzzy_set_params = np.array([1, 4, 5, 10])
 # test_fuzzy_set_type = "TRIANGULAR"
 # test_fuzzy_set_type = "GAUSSIAN"
 # test_fuzzy_set_type = "TRAPEZOIDAL"
@@ -394,6 +433,7 @@ test_fuzzy_set_params = np.array([3, 7])
 # test_fuzzy_set_type = "DIFSIGMOID"
 # test_fuzzy_set_type = "PRODSIGMOID"
 # test_fuzzy_set_type = "ZSPLINE"
-test_fuzzy_set_type = "SSPLINE"
+# test_fuzzy_set_type = "SSPLINE"
+test_fuzzy_set_type = "PSPLINE"
 mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
