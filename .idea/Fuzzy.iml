@@ -5,9 +5,12 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
+  <component name="PackageRequirementsSettings">
+    <option name="requirementsPath" value="C:\Users\vrbaj\PycharmProjects\Fuzzy" />
+  </component>
   <component name="ReSTService">
-    <option name="workdir" value="$MODULE_DIR$" />
-    <option name="DOC_DIR" value="$MODULE_DIR$" />
+    <option name="workdir" value="C:\Users\vrbaj\PycharmProjects\Fuzzy" />
+    <option name="DOC_DIR" value="C:\Users\vrbaj\PycharmProjects\Fuzzy" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="Nosetests" />

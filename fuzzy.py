@@ -90,7 +90,8 @@ def get_gaussian_mf_degree(point, params):
     """
     This function returns the membership degree of point to fuzzy set specified by gaussian  member ship function.
      Gaussian membership function is specified by parameters in params. Gaussian function is implemented as
-     math.exp((-0.5*(point - center)**2)/(sigma**2))
+     :math:`e^{(\\frac{x-center}{2\sigma})}^2`
+
 
     Args:
         point (number):  point in which we want to estimate membership degree
