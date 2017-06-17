@@ -10,8 +10,8 @@ Contents of this page:
     :depth: 1
 
 
-WTF
-============================
+Membership degree estimation
+=============================
 """
 
 
@@ -90,10 +90,10 @@ def get_gaussian_mf_degree(x, params):
     """
     This function returns the membership degree of x to fuzzy set specified by gaussian  member ship function.
      Gaussian membership function is specified by parameters in params. Gaussian function is implemented as
-     :math:`e^{(\\frac{x-center}{2\sigma})}^2`
+     :math:`e^{\\frac{(x-center)^2}{2\sigma^2}}`
 
 
-    Args:
+    *Args:*
         x (number):  x in which we want to estimate membership degree
         params (numpy array):  specification of gaussian membership function [center, sigma]
 
@@ -345,7 +345,7 @@ def get_zspline_mf_degree(x, params):
     for x >= b is output 0.
 
     Args:
-        x (number):  x in which we want to estimate membership degree
+        x (float):  x in which we want to estimate membership degree
         params (numpy array):  specification of sigmoid membership functions [a, b]
 
     Returns:
@@ -356,8 +356,8 @@ def get_zspline_mf_degree(x, params):
     if params.size <= 1 or params.size > 2:
         print("get_get_zspline_mf_degree: invalid number of parameters")
     else:
-        a = params[0]
-        b = params[1]
+        a = float(params[0])
+        b = float(params[1])
         if x <= a:
             membership_degree = 1
         elif a <= x <= (a + b) / 2:
@@ -453,5 +453,5 @@ test_fuzzy_set_params = np.array([1, 4, 5, 10])
 # test_fuzzy_set_type = "ZSPLINE"
 # test_fuzzy_set_type = "SSPLINE"
 test_fuzzy_set_type = "PSPLINE"
-mf = get_membership_degree(x, test_fuzzy_set_type, test_fuzzy_set_params)
+mf = get_membership_degree(test_x, test_fuzzy_set_type, test_fuzzy_set_params)
 print(mf)
