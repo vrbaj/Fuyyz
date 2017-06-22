@@ -47,7 +47,8 @@ def s_norm_max(membership_degreee_a, membership_degree_b):
 
 
 def s_norm_dombi(membership_degree_a, membership_degree_b, lambda_value):
-    s_norm_value = 1 / (1 +((1 / membership_degree_a -1) ** (-1*lambda_value)) + (1 / membership_degree_b - 1) ** (-1 * lambda_value))
+    s_norm_value = 1 / (1 +((1 / membership_degree_a - 1) ** (-1*lambda_value)) +
+    (1 / membership_degree_b - 1) ** (-1 / lambda_value))
     return s_norm_value
 
 
