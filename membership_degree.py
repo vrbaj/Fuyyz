@@ -52,15 +52,15 @@ def get_membership_degree(x, fuzzy_set_type, fuzzy_set_params):
 def get_triangular_mf_degree(x, params):
     """
     This function returns the membership degree of x to fuzzy set specified by triangular  member ship function.
-     Triangular membership function is specified by parameters in params
+    Triangular membership function is specified by parameters in params
 
-    **Args:**
+    *Args:*
         x (number):  x in which we want to estimate membership degree
         params (numpy array):  specification of triangular membership function [lower_limit, center, upper_limit] or
-                 in symmetrical case [distance_from_center_to_bounds, center]
+        in symmetrical case [distance_from_center_to_bounds, center]
 
     Returns:
-        float -- value of membership degree to triangular function
+        float -- value of membership degree to triangular function.
 
     """
     membership_degree = 0
