@@ -54,11 +54,19 @@ def s_norm_dombi(membership_degree_a, membership_degree_b, lambda_value):
     return s_norm_value
 
 
+def s_norm_dubois_prade(membership_degree_a, membership_degree_b, alpha):
+    if not(0 <= alpha <= 1):
+        print("parameter alpha out of bounds, it should be [0,1]")
+    s_norm_value = (membership_degree_a + membership_degree_b - membership_degree_a * membership_degree_b -
+                    min(membership_degree_a, membership_degree_b, 1 - alpha)) / \
+                   (max(1 - membership_degree_a, 1 - membership_degree_b, alpha))
+    return s_norm_value
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
 testing_membership_degree_a = 0.8
 testing_membership_degree_b = 0.2
-complement_value = s_norm_dombi(testing_membership_degree_a, testing_membership_degree_b, 1)
+complement_value = s_norm_dubois_prade(testing_membership_degree_a, testing_membership_degree_b, 0.88)
 print(complement_value)
