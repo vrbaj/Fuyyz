@@ -47,11 +47,18 @@ def s_norm_max(membership_degreee_a, membership_degree_b):
 
 
 def s_norm_dombi(membership_degree_a, membership_degree_b, lambda_value):
-    s_norm_value = 1 / (1 +((1 / membership_degree_a - 1) ** (-1*lambda_value)) +
-    (1 / membership_degree_b - 1) ** (-1 / lambda_value))
+    if lambda_value <= 0:
+        print("parameter lambda out of bounds, it should be (0, inf)")
+    s_norm_value = 1 / (1 + ((1 / membership_degree_a - 1) ** (-1 * lambda_value) +
+                        (1 / membership_degree_b - 1) ** (-1 * lambda_value)) ** (-1 / lambda_value))
     return s_norm_value
 
 
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
+
+testing_membership_degree_a = 0.8
+testing_membership_degree_b = 0.2
+complement_value = s_norm_dombi(testing_membership_degree_a, testing_membership_degree_b, 1)
+print(complement_value)
