@@ -129,11 +129,17 @@ def t_norm_drastic(membership_degree_a, membership_degree_b):
     return t_norm_value
 
 
+def t_norm_einstein(membership_degree_a, membership_degree_b):
+    t_norm_value = membership_degree_a * membership_degree_b / (2 - (membership_degree_a + membership_degree_b -
+                                                                     membership_degree_a * membership_degree_b))
+    return t_norm_value
+
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
 testing_membership_degree_a = 0.7
-testing_membership_degree_b = 0.65
-complement_value = t_norm_drastic(testing_membership_degree_a, testing_membership_degree_b)
+testing_membership_degree_b = 0.1
+complement_value = t_norm_einstein(testing_membership_degree_a, testing_membership_degree_b)
 print(complement_value)
