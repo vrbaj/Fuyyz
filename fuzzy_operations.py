@@ -93,11 +93,23 @@ def s_norm_algebraic(membership_degree_a, membership_degree_b):
     return s_norm_value
 
 
+def t_norm_min(membership_degree_a, membership_degree_b):
+    s_norm_value = min(membership_degree_a, membership_degree_b)
+    return s_norm_value
+
+
+def t_norm_dombi(membership_degree_a, membership_degree_b, lambda_value):
+    if lambda_value <= 0:
+        print("parameter lambda out of bounds, it should be (0, inf)")
+    t_norm_value = 1 / (1 + ((1 / membership_degree_a - 1) ** lambda_value +
+                        (1 / membership_degree_b - 1) ** lambda_value) ** (1 / lambda_value))
+    return t_norm_value
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
 testing_membership_degree_a = 0.2
-testing_membership_degree_b = 0.1
-complement_value = s_norm_algebraic(testing_membership_degree_a, testing_membership_degree_b)
+testing_membership_degree_b = 0.9
+complement_value = t_norm_dombi(testing_membership_degree_a, testing_membership_degree_b,0.10)
 print(complement_value)
