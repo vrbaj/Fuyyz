@@ -46,6 +46,8 @@ def get_membership_degree(x, fuzzy_set_type, fuzzy_set_params):
         membership_degree = get_sspline_mf_degree(x, fuzzy_set_params)
     elif fuzzy_set_type == "PSPLINE":
         membership_degree = get_pspline_mf_degree(x, fuzzy_set_params)
+    elif fuzzy_set_type == "SINGLETON":
+        membership_degree == get_singleton_mf_degree(x, fuzzy_set_params)
     return membership_degree
 
 
@@ -436,6 +438,25 @@ def get_pspline_mf_degree(x, params):
             membership_degree = 2 * ((x - c) / (d - c)) ** 2
         elif x >= d:
             membership_degree = 0
+    return membership_degree
+
+
+def get_singleton_mf_degree(x, params):
+    """
+    This function returns the membership degree of x to singleton fuzzy set specified by its center in params.
+
+    Args:
+        x (number):  x in which we want to estimate membership degree
+        params (numpy array):  center of singleton
+
+    Returns:
+        float -- value of membership degree to fuzzy singleton
+
+    """
+    if x == params:
+        membership_degree = 1
+    elif x != params:
+        membership_degree = 0
     return membership_degree
 
 
