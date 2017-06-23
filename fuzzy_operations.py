@@ -120,11 +120,20 @@ def t_norm_yager(membership_degree_a, membership_degree_b, w):
     return t_norm_value
 
 
+def t_norm_drastic(membership_degree_a, membership_degree_b):
+    t_norm_value = 0
+    if membership_degree_a == 1:
+        t_norm_value = membership_degree_b
+    if membership_degree_b == 1:
+        t_norm_value = membership_degree_a
+    return t_norm_value
+
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
-testing_membership_degree_a = 0.9
-testing_membership_degree_b = 0.8
-complement_value = t_norm_yager(testing_membership_degree_a, testing_membership_degree_b, 0.90)
+testing_membership_degree_a = 0.7
+testing_membership_degree_b = 0.6
+complement_value = t_norm_drastic(testing_membership_degree_a, testing_membership_degree_b)
 print(complement_value)
