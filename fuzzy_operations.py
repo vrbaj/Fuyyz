@@ -107,9 +107,16 @@ def t_norm_dombi(membership_degree_a, membership_degree_b, lambda_value):
 
 
 def t_norm_dubois_prade(membership_degree_a, membership_degree_b, alpha):
-    if not(0 <= alpha <=1):
+    if not(0 <= alpha <= 1):
         print("parameter alpha out of bounds, it should be [0, 1]")
     t_norm_value = membership_degree_a * membership_degree_b / max(membership_degree_a, membership_degree_b, alpha)
+    return t_norm_value
+
+
+def t_norm_yager(membership_degree_a, membership_degree_b, w):
+    if w <= 0:
+        print("parameter w is out of bounds, it should be (0, inf")
+    t_norm_value = 1 - min(1.0, ((1 - membership_degree_a) ** w + (1 - membership_degree_b) ** w) ** (1 / w))
     return t_norm_value
 
 
@@ -117,7 +124,7 @@ def t_norm_dubois_prade(membership_degree_a, membership_degree_b, alpha):
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
-testing_membership_degree_a = 0.2
-testing_membership_degree_b = 0.1
-complement_value = t_norm_dubois_prade(testing_membership_degree_a, testing_membership_degree_b,1.0)
+testing_membership_degree_a = 0.9
+testing_membership_degree_b = 0.8
+complement_value = t_norm_yager(testing_membership_degree_a, testing_membership_degree_b, 0.90)
 print(complement_value)
