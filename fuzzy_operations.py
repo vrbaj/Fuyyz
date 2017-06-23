@@ -74,11 +74,26 @@ def s_norm_yager(membership_degree_a, membership_degree_b, w):
     return s_norm_value
 
 
+def s_norm_drastic(membership_degree_a, membership_degree_b):
+    s_norm_value = 1
+    if membership_degree_a == 0:
+        s_norm_value = membership_degree_b
+    if membership_degree_b == 0:
+        s_norm_value = membership_degree_a
+    return s_norm_value
+
+
+def s_norm_einstein(membership_degree_a, membership_degree_b):
+    s_norm_value = (membership_degree_a + membership_degree_b) / (1 + membership_degree_a * membership_degree_b)
+    return s_norm_value
+
+
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
-testing_membership_degree_a = 0.8
-testing_membership_degree_b = 0.5
-complement_value = s_norm_yager(testing_membership_degree_a, testing_membership_degree_b, 0.001)
+testing_membership_degree_a = 0.2
+testing_membership_degree_b = 0.1
+complement_value = s_norm_einstein(testing_membership_degree_a, testing_membership_degree_b)
 print(complement_value)
