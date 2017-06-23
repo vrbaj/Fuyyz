@@ -134,6 +134,6 @@ def t_norm_drastic(membership_degree_a, membership_degree_b):
 # print(complement_value)
 
 testing_membership_degree_a = 0.7
-testing_membership_degree_b = 0.6
+testing_membership_degree_b = 0.65
 complement_value = t_norm_drastic(testing_membership_degree_a, testing_membership_degree_b)
 print(complement_value)
