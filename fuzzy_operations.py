@@ -11,12 +11,10 @@ Contents of this page:
 
 
 Fuzzy complement, union (S-norms) and intersection (T-norms)
-=============================
+============================================================
 
 
 """
-
-import numpy as np
 
 
 def complement_standard(membership_degree):
@@ -62,11 +60,25 @@ def s_norm_dubois_prade(membership_degree_a, membership_degree_b, alpha):
                    (max(1 - membership_degree_a, 1 - membership_degree_b, alpha))
     return s_norm_value
 
+
+def s_norm_yager(membership_degree_a, membership_degree_b, w):
+    """
+    :param float membership_degree_a: membership degree to set A
+    :param float membership_degree_b: membership degree to set B
+    :param float w: w parameter
+    :return: membership degree of union
+    """
+    if w <= 0:
+        print("parameter w is out of bounds, it should be (0, inf)")
+    s_norm_value = min(1.0, ((membership_degree_a ** w) + (membership_degree_b ** w)) ** (1 / w))
+    return s_norm_value
+
+
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
 # print(complement_value)
 
 testing_membership_degree_a = 0.8
-testing_membership_degree_b = 0.2
-complement_value = s_norm_dubois_prade(testing_membership_degree_a, testing_membership_degree_b, 0.88)
+testing_membership_degree_b = 0.5
+complement_value = s_norm_yager(testing_membership_degree_a, testing_membership_degree_b, 0.001)
 print(complement_value)
