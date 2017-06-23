@@ -88,6 +88,10 @@ def s_norm_einstein(membership_degree_a, membership_degree_b):
     return s_norm_value
 
 
+def s_norm_algebraic(membership_degree_a, membership_degree_b):
+    s_norm_value = membership_degree_a + membership_degree_b - membership_degree_a * membership_degree_b
+    return s_norm_value
+
 
 # testing_membership_degree = 0.9
 # complement_value = complement_yager(testing_membership_degree, 0.3)
@@ -95,5 +99,5 @@ def s_norm_einstein(membership_degree_a, membership_degree_b):
 
 testing_membership_degree_a = 0.2
 testing_membership_degree_b = 0.1
-complement_value = s_norm_einstein(testing_membership_degree_a, testing_membership_degree_b)
+complement_value = s_norm_algebraic(testing_membership_degree_a, testing_membership_degree_b)
 print(complement_value)
